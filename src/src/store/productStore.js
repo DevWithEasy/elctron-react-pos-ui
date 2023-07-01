@@ -2,12 +2,18 @@ import {create} from "zustand";
 import {devtools,persist} from "zustand/middleware";
 
 const createProductStore = (set)=>({
+    products : [],
     cart : [],
+    addProducts : (products)=>{
+        set((state)=>({
+            products : products
+        }))
+    },
     addCart : (product)=>{
         set((state) => {
-            const inCart = state.cart.find(item=>item.id === product.id ? true : false)
+            const inCart = state.cart.find(item=>item._id === product._id ? true : false)
             if (inCart){
-                return {cart : state.cart.map(item => item.id === product.id ? {...item,qty : item.qty+1} : item)}
+                return {cart : state.cart.map(item => item._id === product._id ? {...item,qty : item.qty+1} : item)}
             }else{
                 return {cart : [...state.cart,{...product,qty : 1}]}
             }
@@ -15,12 +21,12 @@ const createProductStore = (set)=>({
     },
     removeCart : (productId)=>{
         set((state)=>({
-            cart : state.cart.filter(product=>product.id !== productId)
+            cart : state.cart.filter(product=>product._id !== productId)
         }))
     },
     adjustQuantity : (productId,qty)=>{
         set((state)=>({
-            cart : state.cart.map(product=>product.id === productId ? {...product,qty : Number(qty)} : product)
+            cart : state.cart.map(product=>product._id === productId ? {...product,qty : Number(qty)} : product)
         }))
     }
 })

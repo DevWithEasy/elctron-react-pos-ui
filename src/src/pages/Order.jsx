@@ -1,23 +1,61 @@
 import React, { useState } from 'react';
+import { BiSearch } from 'react-icons/bi';
 import OrderItem from '../components/OrderItem';
 import useProductStore from '../store/productStore';
+import handleChange from '../utils/handleChange';
+import { createData } from '../utils/crud_utils';
+import axios from 'axios';
+import api_url from '../utils/api_url';
+import { useToast } from '@chakra-ui/react';
 
 const Order = () => {
     const {cart} = useProductStore()
-    const [percent,setPercent] = useState(0)
-    const [name,setName] = useState('')
-    const [mobile,setMobile] = useState('')
+    const toast = useToast()
+    const [value,setValue] = useState({
+        name : '',
+        phone : '',
+        discount : 0,
+    })
+
     const total = cart.reduce((total, cartItem) => total + cartItem.price * cartItem.qty,0)
-    const  discount = (total*percent)/100
+    const  discount = (total*Number(value.discount))/100
     const finalPrice = total-discount
     const order = {
-        name,
-        mobile,
+        ...value,
         cart
     }
-    console.log(order);
+
+    const findCustomer = async() =>{
+        try {
+            const res = await axios.get(`${api_url}/customer/${value.phone}`)
+            if(!res.data.data){
+                toast({
+                    title: 'Not found customer',
+                    status: 'error',
+                    isClosable: true,
+                })
+
+            }else{
+                toast({
+                    title: 'Customer successfully find.',
+                    status: 'success',
+                    isClosable: true,
+                })
+                setValue({
+                    ...value,
+                    name : res.data.data.name,
+                    phone : res.data.data.phone,
+                    discount : res.data.data.status === 'Silver' ? 2.5 : res.data.data.status === 'Gold' ? 5 : res.data.data.status === 'Diamond' ? 10 : 0
+                })
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
     return (
-        <div>
+        <div className='pb-5'>
             <h1 className='p-2 text-2xl text-center font-bold uppercase'>Confirm Order</h1>
             {
                 cart.length === 0 ?
@@ -47,7 +85,7 @@ const Order = () => {
                         </thead>
                         <tbody>
                             {
-                                cart.map(product=><OrderItem key={product.id} {...{product}}/>)
+                                cart.map(product=><OrderItem key={product._id} {...{product}}/>)
                             }
                             <tr className="bg-white ">
                                 <td scope="row" colSpan='3' className="px-2 py-2 font-medium whitespace-nowrap">
@@ -62,7 +100,7 @@ const Order = () => {
                                     Discount %
                                 </td>
                                 <td className="px-6 py-2 text-center">
-                                    <input type='number' value={percent} min={0} onChange={(e)=>setPercent(e.target.value)} className='w-3/12 border-b outline-none rounded-lg text-center p-0.5 pl-4'/> %      
+                                    <input type='number' name='discount' value={value.discount} min={0} onChange={(e)=>handleChange(e,value,setValue)} className='w-3/12 border outline-none rounded-lg text-center p-1'/>
                                 </td>        
                                 <td className="px-6 py-2 text-center">
                                     {discount}      
@@ -70,7 +108,7 @@ const Order = () => {
                             </tr>
                             <tr className="bg-white ">
                                 <th scope="row" colSpan='3' className="px-2 py-2 font-medium whitespace-nowrap">
-                                    Total bill with discount ({percent}%)
+                                    Total bill with discount ({value.percent}%)
                                 </th>
                                 <td className="px-6 py-2 text-center">
                                     {finalPrice}
@@ -78,18 +116,51 @@ const Order = () => {
                             </tr>
                         </tbody>
                     </table>
-                    <div className='flex gap-x-3'>
-                        <div className='w-1/2 space-y-2'>
-                            <label htmlFor="">Customer name :</label>
-                            <input type='text' name='name' onChange={(e)=>setName(e.target.value)} className='w-full p-2 rounded-md border border-gray-300'/>
+                    <div className='flex space-x-2 px-2'>
+                        <div className='w-1/2 flex flex-col space-y-2'>
+                            <input 
+                                type='text' 
+                                name='phone'
+                                value={value.phone} 
+                                onChange={(e)=>handleChange(e,value,setValue)}
+                                placeholder='Enter customer phone number' 
+                                className='w-full p-2 rounded-md border border-gray-300 focus:outline-blue-500'
+                            />
+                            <input 
+                                type='text' 
+                                name='name'
+                                value={value.name} 
+                                onChange={(e)=>handleChange(e,value,setValue)}
+                                placeholder='Enter customer name' 
+                                className='w-full p-2 rounded-md border border-gray-300 focus:outline-blue-500'
+                            />
+                            <button 
+                                onClick={()=>createData('invoice',order)}
+                                className='w-full px-4 py-2 bg-blue-500 text-white rounded-md'
+                            >
+                                Submit order
+                            </button>
                         </div>
-                        <div className='w-1/2 space-y-2'>
-                            <label htmlFor="">Customer mobile No :</label>
-                            <input type='text' name='name' onChange={(e)=>setMobile(e.target.value)} className='w-full p-2 rounded-md border border-gray-300'/>
+                        <div className='w-1/2 flex flex-col space-y-2'>
+                            <input 
+                                type='text' 
+                                name='phone'
+                                value={value.phone} 
+                                onChange={(e)=>handleChange(e,value,setValue)}
+                                placeholder='Enter customer phone number' 
+                                className='w-full p-2 rounded-md border border-gray-300 focus:outline-blue-500'
+                            />
+                            <button
+                                onClick={()=>findCustomer()}
+                                className='flex justify-center items-center space-x-1 px-4 p-2 bg-blue-500 text-white rounded-md'
+                            >
+                                <BiSearch size={20}/>
+                                <span>Check customer</span>
+                            </button>
+                            <div>
+
+                            </div>
                         </div>
-                    </div>
-                    <div className='flex justify-center'>
-                        <button onClick={()=>{}} className='px-4 py-2 bg-blue-500 text-white rounded-md'>Submit order</button>
                     </div>
                 </div>
             }

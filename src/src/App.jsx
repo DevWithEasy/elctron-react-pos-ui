@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useRoutes } from 'react-router-dom'
 import Customers from './pages/Customers'
 import Dashboard from './pages/Dashboard'
@@ -7,6 +6,9 @@ import Invoices from './pages/Invoices'
 import Layout from './pages/Layout'
 import Order from './pages/Order'
 import Products from './pages/Products'
+import Signin from './pages/Signin'
+import Signup from './pages/Signup'
+import Admin from './pages/Admin'
 
 function App() {
   const routes= useRoutes([
@@ -16,28 +18,40 @@ function App() {
       children : [
         {
           index : true,
-          element : <Home/>,
+          element : <Home/>
+        },
+        {
+          path : '/admin',
+          element : <Admin/>
         },
         {
           path : '/dashboard',
-          element : <Dashboard/>,
+          element : <Dashboard/>
         },
         {
           path : '/products',
-          element : <Products/>,
+          element : <Products/>
         },
         {
           path : '/order',
-          element : <Order/>,
+          element : <Order/>
         },
         {
           path : '/invoices',
-          element : <Invoices/>,
+          element : <Invoices/>
         },
         {
           path : '/customers',
-          element : <Customers/>,
-        } 
+          element : <Customers/>
+        },
+        {
+          path : '/signup',
+          element : <Signup/>
+        },
+        {
+          path : '/signin',
+          element : <Signin/>
+        }
       ]
     }
   ])
