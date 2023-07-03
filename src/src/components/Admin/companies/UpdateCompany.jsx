@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-import { updateData } from '../../../utils/crud_utils';
 import {
   Button,
   Modal,
@@ -8,12 +6,14 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
-  useDisclosure,
+  ModalOverlay
 } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { updateData } from '../../../utils/crud_utils';
+import handleChange from '../../../utils/handleChange'
 
-const UpdateBrand = ({brand, update, setUpdate, onClose}) => {
-    const [value,setValue] = useState(brand)
+const UpdateCompany = ({company, update, setUpdate, onClose}) => {
+    const [value,setValue] = useState(company)
     return (
         <>
             <Modal isOpen={update} onClose={()=>{
@@ -22,25 +22,15 @@ const UpdateBrand = ({brand, update, setUpdate, onClose}) => {
             }}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update brand</ModalHeader>
+          <ModalHeader>Update company</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
           <div className='space-y-2'>
                 <label htmlFor="">Company Name :</label>
                 <input 
                     type='text' 
-                    name='company'
-                    value={value.company}
-                    onChange={(e)=>handleChange(e,value,setValue)} 
-                    className='w-full p-2 rounded-md border border-gray-300'
-                />
-            </div>
-            <div className='space-y-2'>
-                <label htmlFor="">Brand Name :</label>
-                <input 
-                    type='text' 
-                    name='brand'
-                    value={value.brand}
+                    name='name'
+                    value={value.name}
                     onChange={(e)=>handleChange(e,value,setValue)} 
                     className='w-full p-2 rounded-md border border-gray-300'
                 />
@@ -55,7 +45,7 @@ const UpdateBrand = ({brand, update, setUpdate, onClose}) => {
               Close
             </Button>
             <Button 
-              onClick={()=>updateData('brand',value)}
+              onClick={()=>updateData('company',value)}
               colorScheme='blue'
             >
               Submit
@@ -67,4 +57,4 @@ const UpdateBrand = ({brand, update, setUpdate, onClose}) => {
     );
 };
 
-export default UpdateBrand;
+export default UpdateCompany;

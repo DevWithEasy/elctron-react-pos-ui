@@ -22,12 +22,12 @@ const AddGeneric = () => {
     <>
       <button 
         onClick={onOpen}
-        className='p-2 bg-blue-100 rounded-md'
+        className='w-full text-left'
       >
         Add Generic
       </button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add new generic</ModalHeader>

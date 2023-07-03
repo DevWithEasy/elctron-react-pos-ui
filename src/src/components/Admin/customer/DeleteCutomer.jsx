@@ -1,7 +1,17 @@
-import React from 'react';
+import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    Button
+} from '@chakra-ui/react';
+import React, { useRef } from 'react';
 import { deleteData } from '../../../utils/crud_utils';
 
-const DeleteBrand = ({brand, remove, setRemove, onClose}) => {
+const DeleteCustomer = ({customer, remove, setRemove, onClose}) => {
+    const cancelRef = useRef()
     return (
         <>
             <AlertDialog
@@ -30,7 +40,7 @@ const DeleteBrand = ({brand, remove, setRemove, onClose}) => {
                   }}>
                     Cancel
                   </Button>
-                  <Button colorScheme='red' onClick={()=>deleteData('product',brand)} ml={3}>
+                  <Button colorScheme='red' onClick={()=>deleteData('customer',customer)} ml={3}>
                     Delete
                   </Button>
                 </AlertDialogFooter>
@@ -41,4 +51,4 @@ const DeleteBrand = ({brand, remove, setRemove, onClose}) => {
     );
 };
 
-export default DeleteBrand;
+export default DeleteCustomer;

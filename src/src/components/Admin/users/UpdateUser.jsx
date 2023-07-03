@@ -63,6 +63,7 @@ const UpdateUser = ({user,update, setUpdate, onClose}) => {
                         value={value.password}
                         onChange={(e)=>handleChange(e,value,setValue)} 
                         className='w-full p-2 rounded-md border border-gray-300'
+                        disabled={false}
                     />
                 </div>
             </ModalBody>

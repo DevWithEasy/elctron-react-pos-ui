@@ -23,7 +23,6 @@ const Home = () => {
         getProducts()
     },[])
 
-    console.log(products)
     return (
         <div className='mt-2'>
             <div className='absolute top-3 '>

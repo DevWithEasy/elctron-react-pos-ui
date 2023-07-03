@@ -40,7 +40,7 @@ const DeleteUser = ({user, remove, setRemove, onClose}) => {
                   }}>
                     Cancel
                   </Button>
-                  <Button colorScheme='red' onClick={()=>deleteData('product',user)} ml={3}>
+                  <Button colorScheme='red' onClick={()=>deleteData('auth',user)} ml={3}>
                     Delete
                   </Button>
                 </AlertDialogFooter>

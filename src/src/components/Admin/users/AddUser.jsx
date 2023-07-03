@@ -25,7 +25,7 @@ const AddUser = () => {
     <>
       <button 
         onClick={onOpen}
-        className='p-2 bg-blue-100 rounded-md'
+        className='w-full text-left'
       >
         Add user
       </button>

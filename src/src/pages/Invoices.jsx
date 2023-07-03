@@ -2,7 +2,7 @@ import React from 'react';
 
 const Invoices = () => {
     return (
-        <div className='m-2'>
+        <div className='p-4'>
             <div className="relative overflow-x-auto space-y-3">
                 <table className="w-full text-sm text-left text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">

@@ -9,6 +9,7 @@ import Products from './pages/Products'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 import Admin from './pages/Admin'
+import Investment from './pages/Investment'
 
 function App() {
   const routes= useRoutes([
@@ -23,6 +24,10 @@ function App() {
         {
           path : '/admin',
           element : <Admin/>
+        },
+        {
+          path : '/investment',
+          element : <Investment/>
         },
         {
           path : '/dashboard',

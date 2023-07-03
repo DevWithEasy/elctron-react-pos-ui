@@ -31,7 +31,7 @@ const Product = ({product}) => {
         >
             <p className=''>{name}</p>
             <p className='flex justify-between space-x-2 text-xs'>
-                <span>Price : {price} </span>
+                <span>Price : {price} ৳</span>
                 <span>Stock : {quantity}</span>
             </p>
         </div>

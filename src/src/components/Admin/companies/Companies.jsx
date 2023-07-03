@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import useUserStore from '../../../store/userStore';
 import { useDisclosure } from '@chakra-ui/react';
-import UpdateBrand from './UpdateBrand';
-import DeleteBrand from './DeleteBrand';
+import UpdateCompany from './UpdateCompany';
+import DeleteCompany from './DeleteCompany';
 
-const Brands = () => {
-    const {brands} = useUserStore()
+const Companies = () => {
+    const {companies} = useUserStore()
     const { onClose } = useDisclosure()
     const [update,setUpdate] = useState(false)
     const [remove,setRemove] = useState(false)
@@ -22,19 +22,15 @@ const Brands = () => {
                                 Company name
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
-                                Brand name
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-center">
                                 Action
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            brands.map((brand,i)=><tr key={brand._id}>
+                            companies.map((company,i)=><tr key={company._id}>
                                 <td className="px-6 py-3 text-center">{i+1}</td>
-                                <td className="px-6 py-3 text-center">{brand?.company}</td>
-                                <td className="px-6 py-3 text-center">{brand?.brand}</td>
+                                <td className="px-6 py-3 text-center">{company?.name}</td>
                                 <td className="px-6 py-3 text-center space-x-2">
                                     <button 
                                         onClick={()=>{
@@ -52,8 +48,8 @@ const Brands = () => {
                                     >
                                         Delete
                                     </button>
-                                    {update && <UpdateBrand {...{brand, update, setUpdate, onClose}}/>}
-                                    {remove && <DeleteBrand {...{brand, remove, setRemove, onClose}}/>}
+                                    {update && <UpdateCompany {...{company, update, setUpdate, onClose}}/>}
+                                    {remove && <DeleteCompany {...{company, remove, setRemove, onClose}}/>}
                                 </td>
                             </tr>)
                         }
@@ -64,4 +60,4 @@ const Brands = () => {
     );
 };
 
-export default Brands;
+export default Companies;

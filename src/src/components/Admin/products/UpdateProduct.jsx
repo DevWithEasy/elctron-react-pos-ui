@@ -17,7 +17,7 @@ import Loading from '../../Loading';
 
 const UpdateProduct = ({product, update, setUpdate, onClose}) => {
     const [value,setValue] = useState(product)
-    const [brands,setBrands] = useState([])
+    const [companies,setCompanies] = useState([])
     const [generics,setGenerics] = useState([])
     const [loading,setLoading] = useState(false)
 
@@ -26,7 +26,7 @@ const UpdateProduct = ({product, update, setUpdate, onClose}) => {
         try {
             const res = await axios.get(`${api_url}/product/findGenericBrand`)
             if(res.data.status ===200){
-                setBrands(res.data.data.brands)
+                setCompanies(res.data.data.companies)
                 setGenerics(res.data.data.generics)
                 setLoading(false)
             } 
@@ -123,15 +123,15 @@ const UpdateProduct = ({product, update, setUpdate, onClose}) => {
                                     </select>
                                 </div>
                                 <div className='w-6/12 space-y-2'>
-                                    <label htmlFor="">Brand :</label>
+                                    <label htmlFor="">Company :</label>
                                     <select
-                                        name='brand'
-                                        value={value.brand}
+                                        name='company'
+                                        value={value.company}
                                         onChange={(e)=>handleChange(e,value,setValue)}
                                         className='w-full p-2 rounded-md border border-gray-300'
                                     >
                                         {
-                                            brands.map((brand) => <option key={brand._id} value={brand._id}>{brand.brand}</option>)
+                                            companies.map((company) => <option key={company._id} value={company._id}>{company.name}</option>)
                                         }
                                     </select>
                                 </div>

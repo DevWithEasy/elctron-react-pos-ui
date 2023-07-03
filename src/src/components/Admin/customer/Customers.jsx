@@ -1,11 +1,11 @@
-import { useDisclosure } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import useUserStore from '../../../store/userStore';
-import UpdateUser from './UpdateUser';
-import DeleteUser from './DeleteUser';
+import { useDisclosure } from '@chakra-ui/react';
+import UpdateCustomer from './UpdateCustomer';
+import DeleteCustomer from './DeleteCutomer';
 
-const Users = () => {
-    const {users} = useUserStore()
+const Customers = () => {
+    const {customers} = useUserStore()
     const { onClose } = useDisclosure()
     const [update,setUpdate] = useState(false)
     const [remove,setRemove] = useState(false)
@@ -19,16 +19,13 @@ const Users = () => {
                                 Sl
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
-                                Name
+                                Customer name
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
-                                Email
+                                Customer phone
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
-                                Phone
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-center">
-                                User Role
+                                Customer status
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
                                 Action
@@ -37,12 +34,11 @@ const Users = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map((user,i)=><tr key={user._id}>
+                            customers.map((customer,i)=><tr key={customer._id}>
                                 <td className="px-6 py-3 text-center">{i+1}</td>
-                                <td className="px-6 py-3 text-center">{user?.name}</td>
-                                <td className="px-6 py-3 text-center">{user?.email}</td>
-                                <td className="px-6 py-3 text-center">{user?.phone}</td>
-                                <td className="px-6 py-3 text-center">{user?.isAdmin ? 'Admin' : 'User'}</td>
+                                <td className="px-6 py-3 text-center">{customer?.name}</td>
+                                <td className="px-6 py-3 text-center">{customer?.phone}</td>
+                                <td className="px-6 py-3 text-center">{customer?.status}</td>
                                 <td className="px-6 py-3 text-center space-x-2">
                                     <button 
                                         onClick={()=>{
@@ -52,16 +48,16 @@ const Users = () => {
                                     >
                                         Update
                                     </button>
-                                    {!user.isAdmin && <button 
+                                    <button 
                                         onClick={()=>{
                                             setRemove(true)
                                         }}
                                         className='p-2 bg-red-500 text-white rounded-md'
                                     >
                                         Delete
-                                    </button>}
-                                    {update && <UpdateUser {...{user, update, setUpdate, onClose}}/>}
-                                    {remove && <DeleteUser {...{user, remove, setRemove, onClose}}/>}
+                                    </button>
+                                    {update && <UpdateCustomer {...{customer, update, setUpdate, onClose}}/>}
+                                    {remove && <DeleteCustomer {...{customer, remove, setRemove, onClose}}/>}
                                 </td>
                             </tr>)
                         }
@@ -72,4 +68,4 @@ const Users = () => {
     );
 };
 
-export default Users;
+export default Customers;

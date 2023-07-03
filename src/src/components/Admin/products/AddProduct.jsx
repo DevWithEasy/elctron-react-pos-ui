@@ -16,12 +16,12 @@ import { createData } from '../../../utils/crud_utils';
 import handleChange from '../../../utils/handleChange';
 
 const AddProduct = ({addProduct,setAddProduct,onClose}) => {
-    const [brands,setBrands] = useState([])
+    const [companies,setCompanies] = useState([])
     const [generics,setGenerics] = useState([])
     const [value,setValue] = useState({
         name : '',
         generic : '',
-        brand : '',
+        company : '',
         sku : '',
         sku_unit : 'mg',
         type : 'Tablet',
@@ -32,7 +32,7 @@ const AddProduct = ({addProduct,setAddProduct,onClose}) => {
     const getData = async () => {
         try {
             const res = await axios.get(`${api_url}/product/findGenericBrand`)
-            setBrands(res.data.data.brands)
+            setCompanies(res.data.data.companies)
             setGenerics(res.data.data.generics)
         } catch (error) {
             console.log(error)
@@ -125,16 +125,16 @@ const AddProduct = ({addProduct,setAddProduct,onClose}) => {
                             </select>
                         </div>
                         <div className='w-6/12 space-y-2'>
-                            <label htmlFor="">Brand :</label>
+                            <label htmlFor="">Company :</label>
                             <select
-                                name='brand'
-                                value={value.brand}
+                                name='company'
+                                value={value.company}
                                 onChange={(e)=>handleChange(e,value,setValue)}
                                 className='w-full p-2 rounded-md border border-gray-300'
                             >
                                 <option value="">select Brand</option>
                                 {
-                                    brands.map((brand) => <option key={brand._id} value={brand._id}>{brand.brand}</option>)
+                                    companies.map((company) => <option key={company._id} value={company._id}>{company.name}</option>)
                                 }
                             </select>
                         </div>

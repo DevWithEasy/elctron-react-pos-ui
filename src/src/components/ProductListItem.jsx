@@ -16,7 +16,7 @@ const ProductListItem = ({product}) => {
                 {product?.generic?.name}
             </td>
             <td className="px-6 py-2 text-center">
-                {product?.brand?.brand}
+                {product?.company?.name}
             </td>
             <td className="px-6 py-2 text-center">
                 {product.sku} {product.sku_unit}

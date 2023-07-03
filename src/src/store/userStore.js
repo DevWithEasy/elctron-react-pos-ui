@@ -5,8 +5,9 @@ const createUserStore = (set)=>({
     isAuth : false,
     user : {},
     users : [],
-    brands : [],
+    companies : [],
     generics : [],
+    customers : [],
 
     addUser : (data)=>{
         set((state)=>({
@@ -25,14 +26,19 @@ const createUserStore = (set)=>({
             users : users
         }))
     },
-    addBrands : (brands)=>{
+    addCompanies : (companies)=>{
         set((state)=>({
-            brands : brands
+            companies : companies
         }))
     },
     addGenerics : (generics)=>{
         set((state)=>({
             generics : generics
+        }))
+    },
+    addCustomers : (customers)=>{
+        set((state)=>({
+            customers : customers
         }))
     }
 })

@@ -1,16 +1,16 @@
 import {
-    AlertDialog,
-    AlertDialogBody,
-    AlertDialogContent,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogOverlay,
-    Button
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Button
 } from '@chakra-ui/react';
 import React, { useRef } from 'react';
 import { deleteData } from '../../../utils/crud_utils';
 
-const DeleteGeneric = ({generic, remove, setRemove, onClose}) => {
+const DeleteCompany = ({company, remove, setRemove, onClose}) => {
     const cancelRef = useRef()
     return (
         <>
@@ -40,7 +40,7 @@ const DeleteGeneric = ({generic, remove, setRemove, onClose}) => {
                   }}>
                     Cancel
                   </Button>
-                  <Button colorScheme='red' onClick={()=>deleteData('generic',generic)} ml={3}>
+                  <Button colorScheme='red' onClick={()=>deleteData('company',company)} ml={3}>
                     Delete
                   </Button>
                 </AlertDialogFooter>
@@ -51,4 +51,4 @@ const DeleteGeneric = ({generic, remove, setRemove, onClose}) => {
     );
 };
 
-export default DeleteGeneric;
+export default DeleteCompany;
