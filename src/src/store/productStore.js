@@ -28,7 +28,12 @@ const createProductStore = (set)=>({
         set((state)=>({
             cart : state.cart.map(product=>product._id === productId ? {...product,qty : Number(qty)} : product)
         }))
-    }
+    },
+    resetCart : ()=>{
+        set((state)=>({
+            cart : []
+        }))
+    },
 })
 const useProductStore =create(
     devtools(

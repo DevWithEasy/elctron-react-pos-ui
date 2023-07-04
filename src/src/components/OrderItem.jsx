@@ -20,7 +20,7 @@ const OrderItem = ({product}) => {
         }
     }
 
-    const value = product?.price * product.qty
+    const value = Number((product?.price * product?.qty).toFixed(2))
 
     useEffect (()=>{
         setQty(product.qty)
@@ -37,7 +37,7 @@ const OrderItem = ({product}) => {
                 <input type='number' value={qty} min='1' onChange={(e)=>handleQtyChange( e)} className='w-20 border outline-none rounded-lg text-center p-1'/>
             </td>
             <td className="px-6 py-2 text-center">
-                {product.price * product.qty}
+                {value}
             </td>
             <td className="px-6 py-2 flex justify-center items-center">
                 <RxCrossCircled onClick={()=>removeCart(product._id)} size={25} className='text-red-500 shrink-0 cursor-pointer'/>

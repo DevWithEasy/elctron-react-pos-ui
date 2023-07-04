@@ -19,7 +19,7 @@ const Cart = ({}) => {
     const btnRef = useRef()
     const navigate = useNavigate()
     const {cart} = useProductStore()
-    const total = cart.reduce((total, cartItem) => total + cartItem.price * cartItem.qty,0)
+    const total = Number(cart.reduce((total, cartItem) => total + cartItem.price * cartItem.qty,0).toFixed(2))
     return (
       <>
       <div className='absolute right-8 top-20 w-16 h-16 shadow-lg rounded-md text-sm'>
@@ -49,13 +49,13 @@ const Cart = ({}) => {
                 <div>
                   {cart.map((product) => <CartItem key={product._id} {...{ product }} />)}
                 </div>
-                <div>
-                  <p className='flex justify-between items-center pr-8'>
+                <div className='my-5'>
+                  <p className='flex justify-between items-center p-4'>
                     <span>Total</span>
                     <span>{total} /-</span>
                   </p>
                 </div>
-                <div className='flex justify-end'>
+                <div className='flex justify-end px-4'>
                   <button 
                     onClick={() => navigate('/order')} 
                     className='px-4 py-2 bg-blue-500 text-white rounded-md'

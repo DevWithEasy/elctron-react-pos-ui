@@ -17,17 +17,24 @@ const Order = () => {
         discount : 0,
     })
 
-    const total = cart.reduce((total, cartItem) => total + cartItem.price * cartItem.qty,0)
-    const  discount = (total*Number(value.discount))/100
-    const finalPrice = total-discount
+    const total = Number(cart.reduce((total, cartItem) => total + cartItem.price * cartItem.qty,0).toFixed(2))
+    const  discount = Number((total*Number(value.discount))/100).toFixed(2)
+    const paid = total-discount
     const order = {
         ...value,
+        total,
+        discount,
+        paid,
         cart
     }
 
     const findCustomer = async() =>{
         try {
-            const res = await axios.get(`${api_url}/customer/${value.phone}`)
+            const res = await axios.get(`${api_url}/customer/${value.phone}`,{
+                headers :{
+                    authorization : localStorage.getItem('token')
+                }
+            })
             if(!res.data.data){
                 toast({
                     title: 'Not found customer',
@@ -92,7 +99,7 @@ const Order = () => {
                                     Total
                                 </td>
                                 <td className="px-6 py-2 text-center">
-                                    {total}
+                                    {paid}
                                 </td>
                             </tr>
                             <tr className="bg-white ">
@@ -111,7 +118,7 @@ const Order = () => {
                                     Total bill with discount ({value.percent}%)
                                 </th>
                                 <td className="px-6 py-2 text-center">
-                                    {finalPrice}
+                                    {paid}
                                 </td>
                             </tr>
                         </tbody>

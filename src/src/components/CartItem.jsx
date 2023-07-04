@@ -27,10 +27,10 @@ const CartItem = ({product}) => {
         <div className='flex justify-between items-center p-2 space-x-2'>
             <p className='w-8/12 flex items-center space-x-3'>
                 <RxCrossCircled onClick={()=>removeCart(product.id)} size={20} className='text-red-500 shrink-0'/>
-                <img src={product?.thumbnail} alt="" className='w-8 h-8 rounded-md'/>
-                <span>{product?.title}</span>
+
+                <span>{product?.name}</span>
             </p>
-            <input type='number' value={qty} min='1' onChange={(e)=>handleQtyChange(e)} className='w-2/12 border outline-none rounded-lg text-center p-0.5 pl-4'/>
+            <input type='number' value={qty} min='1' onChange={(e)=>handleQtyChange(e)} className='w-20 border outline-none rounded-lg text-center p-1'/>
             <p className='w-2/12 text-center'>{value} /-</p>
         </div>
     );
