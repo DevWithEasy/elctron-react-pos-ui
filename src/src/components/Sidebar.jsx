@@ -1,7 +1,7 @@
 import React from 'react';
-import { AiOutlineHome, AiOutlineUserAdd } from 'react-icons/ai';
-import { BiLogInCircle,BiLogOutCircle} from 'react-icons/bi';
-import { MdOutlinePeopleAlt,MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { AiOutlineHome } from 'react-icons/ai';
+import { BiLogInCircle, BiLogOutCircle } from 'react-icons/bi';
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { RiProductHuntLine } from 'react-icons/ri';
 import { RxDashboard } from 'react-icons/rx';
 import { TbFileInvoice } from 'react-icons/tb';
@@ -32,11 +32,6 @@ const Sidebar = () => {
             path : '/invoices',
             title : 'Invoices',
             icon : <TbFileInvoice size={16}/>
-        },
-        {
-            path : '/customers',
-            title : 'Customers',
-            icon : <MdOutlinePeopleAlt size={16}/>
         },
         {
             path : '/dashboard',

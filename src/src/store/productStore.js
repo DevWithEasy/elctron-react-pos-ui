@@ -4,9 +4,15 @@ import {devtools,persist} from "zustand/middleware";
 const createProductStore = (set)=>({
     products : [],
     cart : [],
+    invoices : [],
     addProducts : (products)=>{
         set((state)=>({
             products : products
+        }))
+    },
+    addInvoices : (invoices)=>{
+        set((state)=>({
+            invoices : invoices
         }))
     },
     addCart : (product)=>{

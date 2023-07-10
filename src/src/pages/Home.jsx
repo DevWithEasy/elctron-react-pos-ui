@@ -28,11 +28,11 @@ const Home = () => {
             <div className='absolute top-3 '>
                 <input type="search"
                     placeholder='Seach By Name or Generic or Brand'
-                  className='w-[350px] py-1 px-4 border border-gray-300 placeholder:text-gray-300 placeholder:italic rounded-full'
+                  className='w-[350px] py-1 px-4 border border-gray-300 focus:outline-none placeholder:text-gray-300 placeholder:italic rounded-full'
                 />
             </div>
             <div className='flex justify-between'>
-                <div className={` grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 overflow-y-auto`}>
+                <div className={`grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 px-4 overflow-y-auto`}>
                     {
                         products.map(product =><Product key={product._id} {...{product}}/>)
                     }

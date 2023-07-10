@@ -8,13 +8,17 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { createData } from '../../../utils/crud_utils';
 import handleChange from '../../../utils/handleChange';
+import Loading_request from '../../Loding_request';
 
 const AddGeneric = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+  const toast = useToast()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [loading,setLoading] = useState(false)
     const [value,setValue] = useState({
       name : ''
     })
@@ -22,7 +26,7 @@ const AddGeneric = () => {
     <>
       <button 
         onClick={onOpen}
-        className='w-full text-left'
+        className='bg-blue-50 p-2 rounded'
       >
         Add Generic
       </button>
@@ -49,11 +53,13 @@ const AddGeneric = () => {
               Close
             </Button>
             <Button 
-              onClick={()=>createData('generic',value)}
+              onClick={()=>createData('generic',value,setLoading,onClose,toast)}
               colorScheme='blue'
             >
               Submit
             </Button>
+
+            <Loading_request {...{loading,setLoading}}/>
           </ModalFooter>
         </ModalContent>
       </Modal>

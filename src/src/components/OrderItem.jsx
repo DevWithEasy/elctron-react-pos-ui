@@ -12,6 +12,7 @@ const OrderItem = ({product}) => {
             return toast({
                 title: 'Product no available stock.',
                 status: 'error',
+                duration: 2000,
                 isClosable: true,
             })
         }else{

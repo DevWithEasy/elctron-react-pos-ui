@@ -1,16 +1,31 @@
 import axios from 'axios';
 import api_url from './api_url';
+import toast_alert from './toast_alert';
 
-export const createData= async(path,data) => {
+export const createData= async(path,data,setLoading,onClose,toast) => {
     try {
+        setLoading(true)
         const res = await axios.post(`${api_url}/${path}/create`,data,{
             headers: {
                 authorization : localStorage.getItem('token')
             }
         })
-        console.log(res.data)
+        if (res.status === 200){
+            setLoading(false)
+            onClose()
+            toast_alert(
+                toast,
+                res.data.message
+            )
+        }
+        
     } catch (error) {
-        console.log(error)
+        setLoading(false)
+        toast_alert(
+            toast,
+            error.response.data.message,
+            'error'
+        )
     }
 }
 

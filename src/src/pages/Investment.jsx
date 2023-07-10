@@ -2,12 +2,16 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import api_url from '../utils/api_url';
 import handleChange from '../utils/handleChange';
-import { useToast } from '@chakra-ui/react';
+import { useDisclosure, useToast } from '@chakra-ui/react';
 import {RxCross2} from 'react-icons/rx'
 import { createData } from '../utils/crud_utils';
+import Loading_request from '../components/Loding_request';
+import toast_alert from '../utils/toast_alert';
 
 const Investment = () => {
     const toast = useToast()
+    const { onClose } = useDisclosure()
+    const [loading,setLoading] = useState(false)
     const [search,setSearch] = useState('')
     const [check,setCheck] = useState()
     const [find,setFind] = useState([])
@@ -122,9 +126,29 @@ const Investment = () => {
 
     const createInvestment = async()=>{
         try {
+            setLoading(true)
+            const res = await axios.post(`${api_url}/investment/create`,{total,products},{
+                headers: {
+                    authorization : localStorage.getItem('token')
+                }
+            })
+            if (res.status === 200){
+                setProducts([])
+                setLoading(false)
+                onClose()
+                toast_alert(
+                    toast,
+                    res.data.message
+                )
+            }
             
         } catch (error) {
-            console.log(error)
+            setLoading(false)
+            toast_alert(
+                toast,
+                error.response.data.message,
+                'error'
+            )
         }
     }
     
@@ -181,11 +205,12 @@ const Investment = () => {
                             className='flex justify-center'
                         >
                             <button
-                                onClick={()=>createData('investment',{total,products})}
+                                onClick={()=>createInvestment()}
                                 className='p-2 bg-blue-500 text-white rounded-md mt-10'
                             >
                                 Create investment
                             </button>
+                            <Loading_request {...{loading,setLoading}}/>
                         </div>
                     }
                 </div>

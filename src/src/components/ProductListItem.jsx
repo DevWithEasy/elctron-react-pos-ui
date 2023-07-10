@@ -8,7 +8,7 @@ const ProductListItem = ({product}) => {
     const [update,setUpdate] = useState(false)
     const [remove,setRemove] = useState(false)
     return (
-        <tr className="bg-white border-b ">
+        <tr className={`bg-white border-b ${product.quantity === 0 ? 'text-red-500' :''}`}>
             <th scope="row" className="px-2 py-2 font-medium whitespace-nowrap">
                 {product.name}
             </th>

@@ -7,15 +7,18 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    useDisclosure,
+    useToast
 } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import api_url from '../../../utils/api_url';
-import { createData } from '../../../utils/crud_utils';
 import handleChange from '../../../utils/handleChange';
+import toast_alert from '../../../utils/toast_alert';
+import Loading_request from '../../Loding_request';
 
 const AddProduct = ({addProduct,setAddProduct,onClose}) => {
+    const toast = useToast()
+    const [loading,setLoading] = useState(false)
     const [companies,setCompanies] = useState([])
     const [generics,setGenerics] = useState([])
     const [value,setValue] = useState({
@@ -26,8 +29,36 @@ const AddProduct = ({addProduct,setAddProduct,onClose}) => {
         sku_unit : 'mg',
         type : 'Tablet',
         price : '',
-        quantity : '',
+        quantity : 0,
     })
+
+    const createProduct= async() => {
+        try {
+            setLoading(true)
+            const res = await axios.post(`${api_url}/product/create`,value,{
+                headers: {
+                    authorization : localStorage.getItem('token')
+                }
+            })
+            if (res.status === 200){
+                setAddProduct(false)
+                setLoading(false)
+                onClose()
+                toast_alert(
+                    toast,
+                    res.data.message
+                )
+            }
+            
+        } catch (error) {
+            setLoading(false)
+            toast_alert(
+                toast,
+                error.response.data.message,
+                'error'
+            )
+        }
+    }
 
     const getData = async () => {
         try {
@@ -82,6 +113,7 @@ const AddProduct = ({addProduct,setAddProduct,onClose}) => {
                                 name='quantity'
                                 value={value.quantity} 
                                 onChange={(e)=>handleChange(e,value,setValue)} className='w-full p-2 rounded-md border border-gray-300'
+                                disabled
                             />
                         </div>
                     </div>
@@ -166,11 +198,12 @@ const AddProduct = ({addProduct,setAddProduct,onClose}) => {
                 Close
               </Button>
               <Button 
-                onClick={()=>createData('product',value)}
+                onClick={()=>createProduct()}
                 colorScheme='blue'
               >
                Submit
               </Button>
+              <Loading_request {...{loading,setLoading}}/>
             </ModalFooter>
           </ModalContent>
         </Modal>

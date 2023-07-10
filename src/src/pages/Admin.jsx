@@ -48,46 +48,24 @@ const Admin = () => {
     },[])
     
     return (
-        <div>
-            <div className='p-2 space-x-2'>
-                <Menu>
-                    <MenuButton>
-                        <button className='flex items-center space-x-1 px-4 py-1 border rounded-md text-white bg-blue-500'>
-                            <AiOutlinePlusCircle/>
-                            <span>Add</span>
-                        </button>
-                    </MenuButton>
-                    <MenuList>
-                        <MenuItem >
-                            <AddUser/>
-                        </MenuItem>
-                        <MenuItem>
-                            <AddGeneric/>
-                        </MenuItem>
-                        <MenuItem>
-                            <AddCompany/>
-                        </MenuItem>
-                        <MenuItem>
-                            <button 
-                                onClick={()=>setAddProduct(true)}
-                                className='w-full text-left'
-                            >
-                                Add Product
-                            </button>
-                        </MenuItem>
-                        <MenuItem>
-                            <button 
-                                onClick={()=>navigate('/investment')}
-                                className='w-full text-left'
-                            >
-                                Add Investment
-                            </button>
-                        </MenuItem>
-                    </MenuList>
-                </Menu>
-
+        <div className='p-4 space-y-2'>
+            <div className='grid grid-cols-2 md:grid-cols-6  gap-3'>
+                <AddUser/>
+                <AddGeneric/>
+                <AddCompany/>
+                <button 
+                    onClick={()=>setAddProduct(true)}
+                    className='bg-blue-50 p-2 rounded'
+                >
+                    Add Product
+                </button>
+                <button 
+                    onClick={()=>navigate('/admin/investment')}
+                    className='bg-blue-50 p-2 rounded'
+                >
+                    Add Investment
+                </button>
                 {addProduct && <AddProduct {...{addProduct,setAddProduct,onClose}}/>}
-
             </div>
             <div>
                 <Tabs>

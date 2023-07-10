@@ -3,23 +3,26 @@ import { BiSearch } from 'react-icons/bi';
 import OrderItem from '../components/OrderItem';
 import useProductStore from '../store/productStore';
 import handleChange from '../utils/handleChange';
-import { createData } from '../utils/crud_utils';
 import axios from 'axios';
 import api_url from '../utils/api_url';
 import { useToast } from '@chakra-ui/react';
+import {useNavigate } from 'react-router-dom'
+import cart_img from '../assets/empty-cart.png'
+import get_fixed_num from '../utils/get_fixed_num';
 
 const Order = () => {
-    const {cart} = useProductStore()
+    const {cart,resetCart} = useProductStore()
     const toast = useToast()
+    const navigate = useNavigate()
     const [value,setValue] = useState({
         name : '',
         phone : '',
         discount : 0,
     })
-
-    const total = Number(cart.reduce((total, cartItem) => total + cartItem.price * cartItem.qty,0).toFixed(2))
-    const  discount = Number((total*Number(value.discount))/100).toFixed(2)
-    const paid = total-discount
+    
+    const total = get_fixed_num(cart.reduce((total, cartItem) => total + cartItem.price * cartItem.qty,0))
+    const  discount = get_fixed_num((total*Number(value.discount))/100)
+    const paid = get_fixed_num(total-discount)
     const order = {
         ...value,
         total,
@@ -60,14 +63,51 @@ const Order = () => {
             console.log(error)
         }
     }
+
+    const createInvoice = async() => {
+        try {
+            const res = await axios.post(`${api_url}/invoice/create`,order,{
+                headers: {
+                    authorization : localStorage.getItem('token')
+                }
+            })
+            if(res.data.status === 200){
+
+                resetCart()
+                navigate('/')
+
+                toast({
+                    title: 'Invoice created successfully',
+                    status: 'success',
+                    isClosable: true,
+                })
+            }
+        } catch (error) {
+            console.log(error)
+            toast({
+                title: 'Invoice created failed.',
+                status: 'error',
+                isClosable: true,
+            })
+        }
+    }
     
     return (
         <div className='pb-5'>
             <h1 className='p-2 text-2xl text-center font-bold uppercase'>Confirm Order</h1>
             {
                 cart.length === 0 ?
-                <div className='w-full h-96 flex justify-center items-center'>
-                    <h1 className='text-red-500 italic text-xl'>Please add some product to cart</h1>
+                <div className='w-full h-96 flex flex-col justify-center items-center space-y-5'>
+                    <img
+                        src={cart_img} 
+                        alt="empty-cart"
+                        className='h-24'
+                    />
+                    <h1 
+                        className='text-red-500 italic text-xl'
+                    >
+                        Please add some product to cart
+                    </h1>
                 </div> : 
                 <div className="relative overflow-x-auto px-4 space-y-3">
                     <table className="w-full text-sm text-left text-gray-500">
@@ -142,7 +182,7 @@ const Order = () => {
                                 className='w-full p-2 rounded-md border border-gray-300 focus:outline-blue-500'
                             />
                             <button 
-                                onClick={()=>createData('invoice',order)}
+                                onClick={()=>createInvoice()}
                                 className='w-full px-4 py-2 bg-blue-500 text-white rounded-md'
                             >
                                 Submit order

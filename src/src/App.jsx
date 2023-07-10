@@ -1,5 +1,4 @@
 import { useRoutes } from 'react-router-dom'
-import Customers from './pages/Customers'
 import Dashboard from './pages/Dashboard'
 import Home from './pages/Home'
 import Invoices from './pages/Invoices'
@@ -10,6 +9,7 @@ import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 import Admin from './pages/Admin'
 import Investment from './pages/Investment'
+import Invoice from './pages/Invoice'
 
 function App() {
   const routes= useRoutes([
@@ -26,7 +26,7 @@ function App() {
           element : <Admin/>
         },
         {
-          path : '/investment',
+          path : '/admin/investment',
           element : <Investment/>
         },
         {
@@ -46,8 +46,8 @@ function App() {
           element : <Invoices/>
         },
         {
-          path : '/customers',
-          element : <Customers/>
+          path : '/invoices/:id',
+          element : <Invoice/>
         },
         {
           path : '/signup',

@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow,Menu } = require('electron')
 const isDev = require('electron-is-dev')
 
 const createWindow = () => {
@@ -13,6 +13,8 @@ const createWindow = () => {
         win.loadFile('src/build/index.html')
     }
   }
+
+  // Menu.setApplicationMenu(null);
 
   app.whenReady().then(() => {
     createWindow()

@@ -13,7 +13,7 @@ const Customers = () => {
         <div>
             <div className="relative overflow-x-auto space-y-3">
                 <table className="w-full text-sm text-left text-gray-500">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                    <thead className="text-xs text-gray-700 uppercase bg-blue-50">
                         <tr>
                             <th scope="col" className="px-6 py-3 text-center">
                                 Sl
@@ -23,6 +23,9 @@ const Customers = () => {
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
                                 Customer phone
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-center">
+                                Paid
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
                                 Customer status
@@ -38,6 +41,7 @@ const Customers = () => {
                                 <td className="px-6 py-3 text-center">{i+1}</td>
                                 <td className="px-6 py-3 text-center">{customer?.name}</td>
                                 <td className="px-6 py-3 text-center">{customer?.phone}</td>
+                                <td className="px-6 py-3 text-center">{customer?.paid}</td>
                                 <td className="px-6 py-3 text-center">{customer?.status}</td>
                                 <td className="px-6 py-3 text-center space-x-2">
                                     <button 
